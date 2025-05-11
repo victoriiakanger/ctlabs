@@ -427,8 +427,14 @@ module "cors" {
 # Deployment & Stage
 resource "aws_api_gateway_deployment" "this" {
   depends_on = [
+    aws_api_gateway_integration_response.courses_get_response,
+    aws_api_gateway_integration_response.courses_post_response,
+    aws_api_gateway_integration_response.course_id_get_response,
+    aws_api_gateway_integration_response.course_id_put_response,
+    aws_api_gateway_integration_response.course_id_delete_response,
     aws_api_gateway_integration_response.get_authors_response
   ]
+
   rest_api_id = aws_api_gateway_rest_api.this.id
   triggers = {
     redeployment = sha1(jsonencode(aws_api_gateway_rest_api.this.body))
